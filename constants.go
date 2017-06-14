@@ -105,7 +105,7 @@ const (
 	KRB5KDC_ERR_PA_CHECKSUM_MUST_BE_INCLUDED        = C.KRB5KDC_ERR_PA_CHECKSUM_MUST_BE_INCLUDED        //	"Checksum must be included"
 	KRB5KDC_ERR_DIGEST_IN_SIGNED_DATA_NOT_ACCEPTED  = C.KRB5KDC_ERR_DIGEST_IN_SIGNED_DATA_NOT_ACCEPTED  //	"Digest in signed-data not accepted"
 	KRB5KDC_ERR_PUBLIC_KEY_ENCRYPTION_NOT_SUPPORTED = C.KRB5KDC_ERR_PUBLIC_KEY_ENCRYPTION_NOT_SUPPORTED //	"Public key encryption not supported"
-	KRB5PLACEHOLD_82                                = C.KRB5PLACEHOLD_82                                //	"KRB5 error code 82"
+//	KRB5PLACEHOLD_82                                = C.KRB5PLACEHOLD_82                                //	"KRB5 error code 82"
 	KRB5PLACEHOLD_83                                = C.KRB5PLACEHOLD_83                                //	"KRB5 error code 83"
 	KRB5PLACEHOLD_84                                = C.KRB5PLACEHOLD_84                                //	"KRB5 error code 84"
 	KRB5KRB_AP_ERR_IAKERB_KDC_NOT_FOUND             = C.KRB5KRB_AP_ERR_IAKERB_KDC_NOT_FOUND             //         "The IAKERB proxy could not find a KDC"
