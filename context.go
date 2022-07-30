@@ -21,7 +21,7 @@ func (e ErrorCode) Code() int32 {
 }
 
 func (e ErrorCode) Error() string {
- 	var cmsg *C.char
+	var cmsg *C.char
 	cmsg = C.krb5_get_error_message(nil, C.krb5_error_code(e))
 	gostr := C.GoString(cmsg)
 	C.krb5_free_error_message(nil, cmsg) // seems like a NOOP
@@ -51,7 +51,7 @@ func (kc *Context) toC() C.krb5_context {
 func InitContext() (ctx *Context, err error) {
 	var kc C.krb5_context
 	code := C.krb5_init_secure_context(&kc)
- 	if code != 0 {
+	if code != 0 {
 		err = ErrorCode(code)
 		return
 	}
@@ -70,7 +70,7 @@ func freeContext(kc *Context) {
 }
 
 func (kc *Context) Timeofday() (seconds, microseconds int32, err error) {
-	var cs  C.krb5_timestamp
+	var cs C.krb5_timestamp
 	var cms C.krb5_int32
 
 	code := C.krb5_us_timeofday(kc.toC(), &cs, &cms)

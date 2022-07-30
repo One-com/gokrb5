@@ -1,17 +1,15 @@
 package gokrb5
 
 import (
-	"fmt"
-	"testing"
-	"io/ioutil"
 	"encoding/base64"
+	"fmt"
+	"io/ioutil"
+	"testing"
 )
 
-
 const (
-	
 	testClientPrinc = "client@LOCALHOST"
-	testCCache = `BQQADAABAAgAAAAAAAAAAAAAAAEAAAABAAAACUxPQ0FMSE9TVAAAAAZjbGllbnQAAAABAAAAAQAA
+	testCCache      = `BQQADAABAAgAAAAAAAAAAAAAAAEAAAABAAAACUxPQ0FMSE9TVAAAAAZjbGllbnQAAAABAAAAAQAA
 AAlMT0NBTEhPU1QAAAAGY2xpZW50AAAAAgAAAAIAAAAJTE9DQUxIT1NUAAAABmtyYnRndAAAAAlM
 T0NBTEhPU1QAEgAAACBSFkmqlKEDZdIJbz1xB2fezfoAkiuMPk8i3BiJvA4p4lggZRJYIGUSWCG2
 kgAAAAAAUEEAAAAAAAAAAAAAAAABOmGCATYwggEyoAMCAQWhCxsJTE9DQUxIT1NUoh4wHKADAgEC
@@ -33,7 +31,7 @@ func TestCCache(t *testing.T) {
 		t.Fatal(e)
 	}
 
-	file, err := ioutil.TempFile("","test_ccache_")
+	file, err := ioutil.TempFile("", "test_ccache_")
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -42,9 +40,9 @@ func TestCCache(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	
+
 	_, err = file.Write(data)
- 	if err != nil {
+	if err != nil {
 		t.Fatal(err)
 	}
 
@@ -57,7 +55,7 @@ func TestCCache(t *testing.T) {
 	if p.String() != testClientPrinc {
 		t.Fatalf("Failed reading CC principal. %s != %s", p.String(), testClientPrinc)
 	}
-	
+
 	cursor, err := cc.StartSeqGet()
 	if err != nil {
 		t.Fatal(err)
@@ -86,10 +84,10 @@ func TestCCache(t *testing.T) {
 		if server.Realm() == "X-CACHECONF:" {
 			continue
 		}
-		
+
 		if client.String() != testClientPrinc || server.String() != "krbtgt/LOCALHOST@LOCALHOST" {
 			t.Fatal("Didn't find TGT in CCache")
 		}
 	}
-	
+
 }

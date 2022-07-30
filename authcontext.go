@@ -29,8 +29,8 @@ helper_krb5_mk_req_extended(krb5_context context, krb5_auth_context *auth_contex
 import "C"
 
 import (
-	"unsafe"
 	"runtime"
+	"unsafe"
 )
 
 type AuthContext struct {
@@ -44,13 +44,13 @@ type Authenticator struct {
 }
 
 func newAuthContextFromC(c *Context, p C.krb5_auth_context) *AuthContext {
-	cp := &AuthContext{c,p}
+	cp := &AuthContext{c, p}
 	runtime.SetFinalizer(cp, (*AuthContext).free)
 	return cp
 }
 
 func newAuthenticatorFromC(c *Context, p *C.krb5_authenticator) *Authenticator {
-	cp := &Authenticator{c,p}
+	cp := &Authenticator{c, p}
 	runtime.SetFinalizer(cp, (*Authenticator).free)
 	return cp
 }
@@ -99,15 +99,15 @@ func (p *Authenticator) Client() (*Principal, error) {
 func (p *AuthContext) RdReq(request []byte, keytab *Keytab, server *Principal) (*Ticket, error) {
 	var tp *C.krb5_ticket
 
-	code := C.helper_krb5_rd_req(p.c.toC(), &p.p , unsafe.Pointer(&request[0]), C.uint(len(request)),
+	code := C.helper_krb5_rd_req(p.c.toC(), &p.p, unsafe.Pointer(&request[0]), C.uint(len(request)),
 		server.p, keytab.p, nil, &tp)
 	if code != 0 {
 		return nil, ErrorCode(code)
 	}
-	return  newTicketFromC(p.c, tp), nil
+	return newTicketFromC(p.c, tp), nil
 }
 
-func (p *AuthContext) MkReq(creds *Creds, ap_req_options int32, in []byte) (request []byte, err error ) {
+func (p *AuthContext) MkReq(creds *Creds, ap_req_options int32, in []byte) (request []byte, err error) {
 	var out_data C.krb5_data
 
 	var ibuf unsafe.Pointer
@@ -117,7 +117,7 @@ func (p *AuthContext) MkReq(creds *Creds, ap_req_options int32, in []byte) (requ
 		ilen = len(in)
 	}
 
-	code := C.helper_krb5_mk_req_extended(p.c.toC(), &p.p, C.krb5_flags(ap_req_options), ibuf, C.uint(ilen) ,creds.p, &out_data)
+	code := C.helper_krb5_mk_req_extended(p.c.toC(), &p.p, C.krb5_flags(ap_req_options), ibuf, C.uint(ilen), creds.p, &out_data)
 	if code != 0 {
 		return nil, ErrorCode(code)
 	}

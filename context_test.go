@@ -7,7 +7,7 @@ import (
 // go test -v -exec 'faketime "2008-12-24 08:15:42"'
 const (
 	testTimeofday = 1230102942
-	testRealm = "LOCALHOST"
+	testRealm     = "LOCALHOST"
 )
 
 func TestFaketime(t *testing.T) {
@@ -16,12 +16,12 @@ func TestFaketime(t *testing.T) {
 		t.Fatal(e)
 	}
 
-	s,_,e := krb.Timeofday()
+	s, _, e := krb.Timeofday()
 	if e != nil {
 		t.Fatal(e)
 	}
 
-	if s != testTimeofday && s != testTimeofday + 1 {
+	if s != testTimeofday && s != testTimeofday+1 {
 		t.Errorf("%d != %d", s, testTimeofday)
 	}
 }

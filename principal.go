@@ -134,15 +134,14 @@ func (kc *Context) BuildPrincipal(nameType int32, realm string, components ...st
 	return newPrincipalFromC(kc, cp), nil
 }
 
-
 func (p *Principal) Realm() string {
 	return C.GoStringN(p.p.realm.data, C.int(p.p.realm.length))
 }
 
 func (p *Principal) Name() []string {
 	elements := int(p.p.length)
-	s := make ([]string,elements)
-	for i, _ := range s {
+	s := make([]string, elements)
+	for i := range s {
 		var dp *C.krb5_data
 		dp = C.data_pointer_at_index(p.p.data, C.int(i))
 		data := *dp
@@ -163,7 +162,7 @@ func (p *Principal) UnparseName() (ret string, err error) {
 		err = ErrorCode(code)
 		return
 	}
-	ret =  C.GoString(cs)
+	ret = C.GoString(cs)
 	C.krb5_free_unparsed_name(p.c.toC(), cs)
 	return
 

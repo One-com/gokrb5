@@ -4,8 +4,8 @@ package gokrb5
 import "C"
 
 import (
-	"unsafe"
 	"runtime"
+	"unsafe"
 )
 
 type KeytabEntry struct {
@@ -14,13 +14,13 @@ type KeytabEntry struct {
 }
 
 func newKeytabEntryFromC(c *Context, p *C.krb5_keytab_entry) *KeytabEntry {
-	cp := &KeytabEntry{c,p}
+	cp := &KeytabEntry{c, p}
 	runtime.SetFinalizer(cp, (*KeytabEntry).free)
 	return cp
 }
 
 func newKeytabEntryFromGo(c *Context, p *C.krb5_keytab_entry) *KeytabEntry {
-	cp := &KeytabEntry{c,p}
+	cp := &KeytabEntry{c, p}
 	runtime.SetFinalizer(cp, (*KeytabEntry).freeContents)
 	return cp
 }
