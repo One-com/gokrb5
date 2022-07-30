@@ -1,16 +1,15 @@
 package gokrb5
 
 import (
-	"fmt"
-	"testing"
-	"io/ioutil"
 	"encoding/base64"
+	"fmt"
+	"io/ioutil"
+	"testing"
 )
-
 
 const (
 	testServicePrinc = "http/localhost@LOCALHOST"
-	testKeytab = `BQIAAABLAAIACUxPQ0FMSE9TVAAEaHR0cAAJbG9jYWxob3N0AAAAAVggQiYEABIAIMkX5Jau//Xz
+	testKeytab       = `BQIAAABLAAIACUxPQ0FMSE9TVAAEaHR0cAAJbG9jYWxob3N0AAAAAVggQiYEABIAIMkX5Jau//Xz
 SwWZAlOucx0ROMl3BP6TVGD08H3CUbSOAAAAOwACAAlMT0NBTEhPU1QABGh0dHAACWxvY2FsaG9z
 dAAAAAFYIEImBAARABBHkETIIzVpt/S7ZPdwiyJtAAAAQwACAAlMT0NBTEhPU1QABGh0dHAACWxv
 Y2FsaG9zdAAAAAFYIEImBAAQABiAsIM4imsxpMhbjDgZbiDcRtV200ZdwiwAAAA7AAIACUxPQ0FM
@@ -25,7 +24,7 @@ func TestKeytab(t *testing.T) {
 		t.Fatal(e)
 	}
 
-	file, err := ioutil.TempFile("","test_keytab_")
+	file, err := ioutil.TempFile("", "test_keytab_")
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -34,9 +33,9 @@ func TestKeytab(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	
+
 	_, err = file.Write(data)
- 	if err != nil {
+	if err != nil {
 		t.Fatal(err)
 	}
 
@@ -68,8 +67,8 @@ func TestKeytab(t *testing.T) {
 		pstr := princ.String()
 
 		if pstr != testServicePrinc && entry.Kvno() != 4 {
-			t.Fatal("Unexpected principal keys in keytab: (kvno:%d) %s", pstr, entry.Kvno())
+			t.Fatalf("Unexpected principal keys in keytab: (kvno:%d) %s", entry.Kvno(), pstr)
 		}
 	}
-	
+
 }

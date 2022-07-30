@@ -15,7 +15,7 @@ type CCache struct {
 }
 
 func newCCacheFromC(c *Context, p C.krb5_ccache) *CCache {
-	cp := &CCache{c,p}
+	cp := &CCache{c, p}
 	runtime.SetFinalizer(cp, (*CCache).Close)
 	return cp
 }
@@ -68,7 +68,7 @@ func (p *CCache) StartSeqGet() (*CCacheCursor, error) {
 
 func (p *CCache) NextCred(cursor *CCacheCursor) (creds *Creds, err error) {
 	c := &C.krb5_creds{}
-	
+
 	code := C.krb5_cc_next_cred(p.c.toC(), p.p, (*C.krb5_cc_cursor)(cursor), c)
 	if code != 0 {
 		if code == C.KRB5_CC_END {

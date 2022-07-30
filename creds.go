@@ -13,13 +13,13 @@ type Creds struct {
 }
 
 func newCredsFromC(c *Context, p *C.krb5_creds) *Creds {
-	cp := &Creds{c,p}
+	cp := &Creds{c, p}
 	runtime.SetFinalizer(cp, (*Creds).free)
 	return cp
 }
 
 func newCredsFromGo(c *Context, p *C.krb5_creds) *Creds {
-	cp := &Creds{c,p}
+	cp := &Creds{c, p}
 	runtime.SetFinalizer(cp, (*Creds).freeContents)
 	return cp
 }
@@ -27,7 +27,6 @@ func newCredsFromGo(c *Context, p *C.krb5_creds) *Creds {
 func (c *Creds) freeContents() {
 	C.krb5_free_cred_contents(c.c.toC(), c.p)
 }
-
 
 func (c *Creds) free() {
 	C.krb5_free_creds(c.c.toC(), c.p)
@@ -47,7 +46,7 @@ func (c *Creds) Server() (*Principal, error) {
 	return newPrincipalFromC(c.c, cp), nil
 }
 
-func (c *Creds) Client() (*Principal, error)  {
+func (c *Creds) Client() (*Principal, error) {
 	var cp C.krb5_principal
 	code := C.krb5_copy_principal(c.c.toC(), c.p.client, &cp)
 	if code != 0 {

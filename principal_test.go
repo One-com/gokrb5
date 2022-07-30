@@ -20,14 +20,14 @@ func TestPrincipal(t *testing.T) {
 	}
 
 	if p1.String() != pnamestr {
-		t.Error("Principal build failed, %s != %s\n", p1, pnamestr)
+		t.Errorf("Principal build failed, %s != %s\n", p1, pnamestr)
 	}
-	
+
 	str, err := p1.UnparseName()
 	if err != nil {
 		t.Fatal(err)
 	}
-	
+
 	p2, err := kctx.ParseName(str)
 	if err != nil {
 		t.Fatal(err)
@@ -41,7 +41,7 @@ func TestPrincipal(t *testing.T) {
 			fail = true
 		}
 	}
-	
+
 	if nt != NT_PRINCIPAL || r != realm || fail {
 		t.Error("Principal ParseName failed\n")
 	}

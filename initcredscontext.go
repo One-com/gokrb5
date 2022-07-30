@@ -21,8 +21,8 @@ helper_krb5_init_creds_step(krb5_context context, krb5_init_creds_context icreds
 import "C"
 
 import (
-	"unsafe"
 	"runtime"
+	"unsafe"
 )
 
 type InitCredsContext struct {
@@ -51,7 +51,6 @@ func (kc *Context) NewInitCredsContext(client *Principal) (*InitCredsContext, er
 	return newInitCredsContextFromC(kc, cp), nil
 }
 
-
 func (ic *InitCredsContext) SetPassword(password string) (err error) {
 
 	pw := C.CString(password)
@@ -67,7 +66,7 @@ func (ic *InitCredsContext) SetPassword(password string) (err error) {
 
 func (ic *InitCredsContext) GetCreds() (creds *Creds, err error) {
 	var c C.krb5_creds
-	code := C.krb5_init_creds_get_creds(ic.c.toC(),ic.p,&c)
+	code := C.krb5_init_creds_get_creds(ic.c.toC(), ic.p, &c)
 	if code != 0 {
 		return nil, ErrorCode(code)
 	}
@@ -76,7 +75,7 @@ func (ic *InitCredsContext) GetCreds() (creds *Creds, err error) {
 }
 
 func (ic *InitCredsContext) Step(in []byte) (out []byte, realm string, flags uint32, err error) {
-	var out_data  C.krb5_data
+	var out_data C.krb5_data
 	var out_realm C.krb5_data
 
 	var ibuf unsafe.Pointer

@@ -4,8 +4,8 @@ package gokrb5
 import "C"
 
 import (
-	"unsafe"
 	"runtime"
+	"unsafe"
 )
 
 type KeytabCursor C.krb5_kt_cursor
@@ -16,7 +16,7 @@ type Keytab struct {
 }
 
 func newKeytabFromC(c *Context, p C.krb5_keytab) *Keytab {
-	cp := &Keytab{c,p}
+	cp := &Keytab{c, p}
 	runtime.SetFinalizer(cp, (*Keytab).Close)
 	return cp
 }
@@ -59,7 +59,6 @@ func (p *Keytab) GetName(maxlength uint) (name string, err error) {
 	return
 }
 
-
 func (p *Keytab) GetEntry(princ *Principal, vno uint, enctype int32) (*KeytabEntry, error) {
 	var entry *C.krb5_keytab_entry
 	entry = (*C.krb5_keytab_entry)(C.malloc(C.size_t(unsafe.Sizeof(*entry))))
@@ -99,7 +98,7 @@ func (p *Keytab) StartSeqGet() (*KeytabCursor, error) {
 
 func (p *Keytab) NextEntry(cursor *KeytabCursor) (entry *KeytabEntry, err error) {
 	c := &C.krb5_keytab_entry{}
-	
+
 	code := C.krb5_kt_next_entry(p.c.toC(), p.p, c, (*C.krb5_kt_cursor)(cursor))
 	if code != 0 {
 		if code == C.KRB5_KT_END {

@@ -13,7 +13,7 @@ type Keyblock struct {
 }
 
 func newKeyblockFromC(c *Context, p *C.krb5_keyblock) *Keyblock {
-	cp := &Keyblock{c,p}
+	cp := &Keyblock{c, p}
 	runtime.SetFinalizer(cp, (*Keyblock).free)
 	return cp
 }

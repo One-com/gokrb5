@@ -19,8 +19,8 @@ helper_decode_ticket(void *gobuf, unsigned int length, krb5_ticket **ticket) {
 import "C"
 
 import (
-	"unsafe"
 	"runtime"
+	"unsafe"
 )
 
 type Ticket struct {
@@ -65,7 +65,7 @@ func (p *Ticket) Server() (*Principal, error) {
 }
 
 func (p *Ticket) Client() (*Principal, error) {
-	if p.p.enc_part2 !=nil && p.p.enc_part2.client !=nil {
+	if p.p.enc_part2 != nil && p.p.enc_part2.client != nil {
 		var cp C.krb5_principal
 		code := C.krb5_copy_principal(p.c.toC(), p.p.enc_part2.client, &cp)
 		if code != 0 {
